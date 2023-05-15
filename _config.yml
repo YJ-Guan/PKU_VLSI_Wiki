@@ -1,6 +1,6 @@
-title: RunDocs
+title: PKU_VLSI_Wiki
 lang: en
-description: Extends the continuous integration documentation capabilities of GitHub pages for everyone!
+description: PKU VLSI Wiki
 
 remote_theme: rundocs/jekyll-rtd-theme
 
