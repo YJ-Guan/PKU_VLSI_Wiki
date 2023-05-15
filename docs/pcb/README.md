@@ -1,7 +1,7 @@
 ---
-sort: 2
+sort: 4
 ---
 
-# Configuration
+# PCB及封装
 
 {% include list.liquid %}

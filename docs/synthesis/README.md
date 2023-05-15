@@ -1,7 +1,7 @@
 ---
-sort: 4
+sort: 2
 ---
 
-# Contributing
+# 综合
 
 {% include list.liquid %}
