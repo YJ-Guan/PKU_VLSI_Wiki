@@ -3,6 +3,7 @@ sort: 1
 ---
 
 # 常见问题
+
 1. Encounter导入Innovus导出的DB时出错，报ENCVL-209，.v.bin syntax error
 S: Innovus里导出.v netlist (saveNetlist) 放入DB中并替换.global中的init_verilog设置
 2. Encounter里followpin的via打不上
