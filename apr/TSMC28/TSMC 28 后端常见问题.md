@@ -1,41 +1,42 @@
----
-sort: 2
----
-
-
 # TSMC 28 后端常见问题
 
+### 1. **Metal Option为1p10_5X2Y2R**
 
+45nm，特征尺寸
 
-* **1p10_5X2Y2R**
+1P10M, 1 poly 10 metal
 
-  45nm，特征尺寸
+X Y Z U 都指的是厚度，比如说X是2倍M1厚度，Y是4倍M1厚度
 
-  1P10M, 1 poly 10 metal
+6X1Y1Z1U 指的是M2-M7是X的厚度，M8是Y的厚度，M9是Z的厚度，M10是U的厚度
 
-  X Y Z U 都指的是厚度，比如说X是2倍M1厚度，Y是4倍M1厚度
+🔴**Warning：调用的文件一定要注意Metal Option是否正确，包括DRC LVS文件中的Metal Option选项**
 
-  6X1Y1Z1U 指的是M2-M7是X的厚度，M8是Y的厚度，M9是Z的厚度，M10是U的厚
-* **HVH/VHV → Routing Tracks方向**
+### 2. **HVH/VHV → Routing Tracks方向**
 
-横着摆Std Cell就应该用
+这里我们使用HVH的版本，在APR文件夹的 techFile中有生成好的版本，`Path@VLSI-04: /workspace/home/guanyj/SSCNN/APR/techFile/tsmcn28_10lm5X2Y2RUTRDL.tlef`​
 
-* **.tlef file用于定义Site/Track，Innovus DRC Check, Innovus怎么读入.tlef?**
+##### 2.1 **.tlef file用于定义Site/Track，Innovus DRC Check, Innovus怎么读入.tlef?**
 
-注意tlef要先于其他lef读取
+tlef即tech lef
+
+🔴**Warning：**在Innovus中注意 **tlef要先于其他lef读取，**否则会报错
 
 /workspace/technology/tsmc28/28HPC+RF/APR_Tech/Cadence/tn28clpr002e1_1_9_1a/PRTF_EDI_28nm_Cad_V19_1a/PR_tech
 
-* **需要自己生成.tlef? ​**
-* [**https://blog.csdn.net/graymount/article/details/120806691**](https://blog.csdn.net/graymount/article/details/120806691)
+##### 2.2 **需要自己生成.tlef? ​**
 
-注意设置7Track，同时Std Cell里写到 Poly Pinch=140，参考/workspace/home/guanyj/SSCNN/APR/techFile/readme
+可参考：[**https://blog.csdn.net/graymount/article/details/120806691**](https://blog.csdn.net/graymount/article/details/120806691)
 
-已经生成好的在这里/workspace/home/guanyj/SSCNN/APR/techFile/tsmcn28_10lm5X2Y2RUTRDL.tlef
+注意设置**7 Track**，同时Std Cell里写到**​ Poly Pinch=140**，参考/workspace/home/guanyj/SSCNN/APR/techFile/readme
 
-/workspace/technology/tsmc28/28HPC+RF/APR_Tech/Cadence/tn28clpr002e1_1_9_1a/PRTF_EDI_28nm_Cad_V19_1a/GenPRTF.tcl
+已经生成好的在这里​`Path@VLSI-04:/workspace/home/guanyj/SSCNN/APR/techFile/tsmcn28_10lm5X2Y2RUTRDL.tlef ​`​
 
- tclsh GenPRTF.tcl -InputPRTF PR_tech/Cadence/LefHeader/HVH/tsmcn28_10lm5X2Y2RUTRDL.tlef -CellHeight 7 -VRP 0.14
+如果需要（或者想体验）自己生成.tlef
+
+ `/workspace/technology/tsmc28/28HPC+RF/APR_Tech/Cadence/tn28clpr002e1_1_9_1a/PRTF_EDI_28nm_Cad_V19_1a/GenPRTF.tcl ​`​
+
+​`tclsh GenPRTF.tcl -InputPRTF PR_tech/Cadence/LefHeader/HVH/tsmcn28_10lm5X2Y2RUTRDL.tlef -CellHeight 7 -VRP 0.14`​
 
 * **DRC  Manual**
 
