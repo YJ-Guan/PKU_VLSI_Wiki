@@ -8,7 +8,7 @@ readme_index:
   with_frontmatter: true
 
 
-exclude:  
+exclude:
   - Makefile  
   - CNAME  
   - Gemfile  
@@ -17,8 +17,8 @@ exclude:
 plugins:  
   - jekyll-auth  
   
-jekyll_auth:  
-  users:  
+jekyll_auth: 
+  users: 
     - username: vlsi  
       password: a219  
   exclude: "/exclude-this-path/*"
