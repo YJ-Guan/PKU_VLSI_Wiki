@@ -14,7 +14,7 @@ exclude:
   - Gemfile.lock
   
   
-  plugins:
+plugins:
   - jekyll-auth
 
 jekyll_auth:
