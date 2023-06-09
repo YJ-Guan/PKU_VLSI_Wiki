@@ -1,6 +1,8 @@
 ---
-sort: 2
+sort: 1
 ---
+
+
 # TSMC 28 后端常见问题
 
 **Author:** Yujiang Guan 	**Created Date:** 2022-06-29
@@ -62,14 +64,6 @@ tlef即tech lef
 
 ​`tclsh GenPRTF.tcl -InputPRTF PR_tech/Cadence/LefHeader/HVH/tsmcn28_10lm5X2Y2RUTRDL.tlef -CellHeight 7 -VRP 0.14`​
 
-‍
-
-### 3. **DRC  Manual路径**
-
-​​`Path@VLSI-04:/materials/technology/tsmc28/28HPC+RF/DRM_and_Sealring/tn28cldr002_2_1/TN28CLDR002_2_1.pdf`​
-
-‍
-
 ### 4. **SRAM方向必须和Std方向保持一致，R0即为版图中的方向**
 
 下图来自：
@@ -94,7 +88,7 @@ tlef即tech lef
 
 ​![image](assets/image-20230606153157-tknswen.png "Smart Non-Default Routing for Clock Power Reduction")​
 
-​![image](assets/image-20230606153217-yz2kytx.png "STD_Cell/Release_note")
+​​​![image](assets/image-20230609105509-rfied65.png)​​
 
 ‍
 
@@ -112,24 +106,6 @@ tlef即tech lef
 
 ‍
 
-### 8. **Sealing Ring**
-
-根据DRC Manual中，Section 4.5.65，四边需要留出24um给SealRing，选用MR版本GDS，CORNER应刚好卡在REF层边缘（红色虚线）
-
-/materials/technology/tsmc28/28HPC+RF/DRM_and_Sealring/tn28cldr002_2_1/N28_TSMC_SRDMB_Mr_1P10M_002_20160711_SR_BKM.gds
-
-Virtuoso中为CSR1DMY
-
-​![image](assets/image-20230606153406-rukmniw.png)  
-  
-​![image](assets/image-20230606153418-5tjn6ff.png "Seal Ring 摆放规则，出自DRC PDF")
-
-#### 8.1 **SealRing的边怎么加？**
-
-USCRN和UCSRN_NOVIA怎么加？UCSRN_NOVIA有VIA那一侧要对齐USCRN阵列，为了避免Via重叠的DRC；USCRN_NOVIA即使完全和Corner重叠也可以，前提是别用有Via的那一边对着Corner，prBoundry层和SEALRING dr2层要对齐
-
-​![image](assets/image-20230606153510-8xsnula.png)
-
 ‍
 
 ​​
@@ -138,7 +114,7 @@ USCRN和UCSRN_NOVIA怎么加？UCSRN_NOVIA有VIA那一侧要对齐USCRN阵列，
 
 /materials/technology/tsmc28/TSMC_28_IP/STD_CELL/tcbn28hpcplusbwp7t30p140_190a/tcbn28hpcplusbwp7t30p140_190a_rln/digital/Documentation/release_note/GL_TCBN28HPCPLUSBWP7T30P140_190A.pdf
 
-​![](assets/image-20230606153534-w5ysmox.png)​
+​![image](assets/image-20230609105618-tgzuy8n.png)​
 
 /workspace/home/guanyj/SSCNN/APR/script/change_via.tcl
 
@@ -180,76 +156,3 @@ editChangeVia -from VIAGEN12_4 -to EDI_V12_36x1 -selected
 可以直接用GUI-Add Ring，把offset调成负的，在Set Custom Ring中调整需要的边数，延伸到Power Ring上
 
 ​​![image](assets/image-20230606164942-x6qiri2.png)​​
-
-* 2022.6.2      Meeting
-
-  ‍
-
-  1. ESD Latchup LUP IO的DRC可以Waive
-  2. DRC需要检查DRC ANT assumuble rules，提交时需要同时提交DRC clear的log
-
-‍
-
-### 11. 怎么加Dummy
-
-#### 11.1 **使用脚本加Dummy（推荐使用）**
-
-修改脚本中的gds路径和Top Cell名，脚本路径如下：
-
-​`Path@VLSI-04:/workspace/home/guanyj/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/Calibre/dummy_util/Dummy_OD_PO_Calibre_28nm_HP_19b/Dummy_OD_PO_CalibreYE_28nm_HP.19b`​
-
-calibre -drc -hier -turbo Dummy_OD_PO_Calibre_28nm_HP.19b
-
-calibre -drc -hier -turbo  Dummy_Metal_Via_Calibre_28nm.20a
-
-Merge GDS：
-
-a.在csh终端敲入 calibredrv -shell
-
-b.输入layout filemerge -in DODPO.gds -in DM.gds -in /workspace/home/guanyj/SSCNN/layout/Top_SR.gds -out Top_SR_Dummy.gds -createtop Top_SR_Dummy
-
-‍
-
-#### 11.2 用TSMC Utility加Dummy (不建议用，会出错)
-
-​![image](assets/image-20230606153807-l2bwmlo.png)​
-
-点一下File可以激活TSMC PDK Tools，选Insertion Utility后，到/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/skill/Dummy_insertion_utility/Calibre/Dummy_Metal_Via_Calibre_28nm_V20a/Dummy_Metal_Via_Calibre_28nm.20a中根据1P10M5X2Y2R打开需要dummy的层（每次启动Utility选项都会重置！现在每次刷新都配置好了是1P10M）
-
-‍
-
-‍
-
-### 12. Calibre DRC检查出现CIC(EFP.M2.S1) in FA1D0BWP7T30P140UHVT
-
-手动连线，采用如下方案修复
-
-​![image](assets/image-20230606153905-p54cfzw.png)​
-
-‍
-
-### 13. LVS时报XgCGor的找不到
-
-可以直接去cdl里把对应的给注释掉，这些模块都是空的
-
-‍
-
-### 14. LVS要注意需要手动加电源的Pin Text，如VDD1,VDDPST,VDD2等
-
-‍
-
-### 15. DRC时，如果是Cell级设计，需要关掉以下Option，整片设计则需要打开
-
-//#DEFINE FULL_CHIP                       // Turn on for chip level design
-
-//#DEFINE WITH_SEALRING                   // Turn on if Seal-Ring is already added in chip layout
-
-DRC文件参考：/workspace/home/guanyj/TSMC28_Rules/DRC，
-
-🔴**Warning：注意流片时，calibre.drc, ANT, WIRE_BOND都需要跑**
-
-‍
-
-* SPICE模型的文档在：
-
-/materials/technology/tsmc28/28HPC+RF/PDK/TSMC_iPDK/tn28crsp029w1_1_8_2p2a/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531_all/PDK_doc/TSMC_DOC_WM/model/1d8
