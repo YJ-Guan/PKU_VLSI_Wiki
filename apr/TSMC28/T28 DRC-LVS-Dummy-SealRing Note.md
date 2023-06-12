@@ -1,3 +1,7 @@
+---
+sort: 4
+---
+
 # T28 DRC-LVS-Dummy-SealRing Note
 
 **Author:** Yujiang Guan 	**Created Date:** 2022-10-18

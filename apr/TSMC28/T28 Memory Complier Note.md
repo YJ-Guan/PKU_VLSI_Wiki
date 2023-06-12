@@ -1,3 +1,7 @@
+---
+sort: 3
+---
+
 # T28 Memory Complier Note
 
 **Author:** Yujiang Guan 	**Created Date:** 2022-10-18
