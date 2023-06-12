@@ -1,4 +1,11 @@
-# T28 DRC-LVS-Dummy-SealRing
+# T28 DRC-LVS-Dummy-SealRing Note
+
+**Author:** Yujiang Guan 	**Created Date:** 2022-10-18
+
+|Version|Author|Modified|Contents|
+| ---------| ---------| ------------| ----------------------------|
+|1.0|YJ-Guan|2022-10-18|First Version|
+|1.1|YJ-Guan|2023-06-06|Markdown Version, Uploaded|
 
 ### 1. DRC
 
@@ -135,10 +142,3 @@ b.输入layout filemerge -in DODPO.gds -in DM.gds -in /workspace/home/guanyj/SSC
 ​![image](assets/image-20230606153905-p54cfzw.png)​
 
 ‍
-
-2022.6.2      Meeting
-
-‍
-
-1. ‍
-2. ‍
